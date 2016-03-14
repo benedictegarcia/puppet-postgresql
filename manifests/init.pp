@@ -262,6 +262,7 @@ class postgresql (
   $service_autorestart   = params_lookup( 'service_autorestart' , 'global' ),
   $options               = params_lookup( 'options' ),
   $version               = params_lookup( 'version' ),
+  $hold_package          = params_lookup( 'hold_package' ),
   $absent                = params_lookup( 'absent' ),
   $disable               = params_lookup( 'disable' ),
   $disableboot           = params_lookup( 'disableboot' ),
@@ -308,11 +309,15 @@ class postgresql (
   $bool_firewall=any2bool($firewall)
   $bool_debug=any2bool($debug)
   $bool_audit_only=any2bool($audit_only)
+  $bool_hold_package=any2bool($hold_package)
 
   ### Definition of some variables used in the module
   $manage_package = $postgresql::bool_absent ? {
     true  => 'absent',
-    false => 'present',
+    false => $postgresql::bool_hold_package ? {
+      true  => 'held',
+      false => 'present',
+    }
   }
 
   $manage_service_enable = $postgresql::bool_disableboot ? {
