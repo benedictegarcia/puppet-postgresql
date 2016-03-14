@@ -90,6 +90,12 @@
 #   Please check [*use_postgresql_repo*] to see the expected behaviour when
 #   both set.
 #
+# [*hold_package*]
+#   Set to 'true' to keep package held by module
+#   Is usefull if you want to avoid updates
+#   Used only if absent set to false
+#   Default: false
+#
 # [*absent*]
 #   Set to 'true' to remove package(s) installed by module
 #   Can be defined also by the (top scope) variable $postgresql_absent
